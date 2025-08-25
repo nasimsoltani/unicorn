@@ -3,3 +3,4 @@ results/
 pkls/
 __init__.py
 __pycache__
+.ipynb_checkpoints/
