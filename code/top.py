@@ -55,6 +55,10 @@ if __name__ == "__main__":
 	# after which training stops if training loss does not improve.
 	args.patience = 7 
 
+	## create necessary directories
+	if not os.path.exists(args.save_path):
+		os.makedirs(args.save_path)
+
 
 	# Initial configurations
 	os.environ["CUDA_DEVICE_ORDER"] = "PCI_BUS_ID"

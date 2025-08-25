@@ -23,6 +23,7 @@ Exp_name = 'ICMLCN5'
 ds_path = '../pkls/'
 ds_path = os.path.abspath(ds_path)
 
+
 # All ID and OOD classes
 classmap = {'CallofDuty':0,'Twitch':5,'Teams':4,'Facebook':1, 'Zoom':3, 'Meet':2}
 
@@ -35,6 +36,11 @@ with open ('../file2app_map.pkl','rb') as handle:
 
 trace_base_path = '../traces/'
 trace_base_path = os.path.abspath(trace_base_path)
+
+## create necessary directories
+if not os.path.exists(ds_path):
+	os.makedirs(ds_path)
+
 
 # ------------------------------------------- Functions -------------------------------------------
 
