@@ -1,7 +1,6 @@
 #bin/bash/!
 python top.py \
 --gpu_id $1 \
---Train \
 --Test \
 --OOD_class 'Teams' \
 --model_flag 'ResConvNet' \

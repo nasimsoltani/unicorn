@@ -11,11 +11,12 @@ import torch
 import torch.nn as nn
 import torch.optim
 from torch.utils.data import Dataset, DataLoader
+
 from train_model import train_model
-
-from data_generator import LoadData, TrainORANTracesDataset#, ValORANTracesDataset
+from data_generator import LoadData, TrainORANTracesDataset
 from models import model_loader
-
+from ood_detection import in_distribution_clusters, knn_ood_detector 
+from test_model import test_model
 
 if __name__ == "__main__":
 
@@ -104,7 +105,7 @@ if __name__ == "__main__":
 		# for anchor, positive, negative in train_dl:
 		#   print(anchor.shape, positive.shape, negative.shape)
 		#     continue
-		train_model(model, train_dl, val_dl, args, filename_suffix)
+		model = train_model(model, train_dl, val_dl, args, filename_suffix)
 
 	# --------------- Training done --------------- Now Test ---------------------
 
@@ -113,7 +114,8 @@ if __name__ == "__main__":
 	ID_classes = list(filter(lambda x: x!=args.OOD_class , all_classes))
 	num_classes = len(ID_classes)
 	
-	model = model_loader(args.model_flag, num_classes, args.weight_path)
+	if not args.Train:    # if training was not done, you have to specify the weight_path
+		model = model_loader(args.model_flag, num_classes, args.weight_path)
 
 	if args.Test:
 
@@ -131,7 +133,7 @@ if __name__ == "__main__":
 
 		# subtraces that were fed to the NN are also included in pred_dict
 
-		with open('pred_dict-'+args.mode_flag+'-oodindex'+str(OOD_index)+'.pkl', 'wb') as handle:
+		with open(os.path.join(args.save_path, 'pred_dict-'+args.model_flag+'-oodindex'+str(OOD_index)+'.pkl'), 'wb') as handle:
 			pickle.dump(pred_dict,handle,protocol=pickle.HIGHEST_PROTOCOL)
 
 		for label in range(len(total_slice_count)):
@@ -162,5 +164,5 @@ if __name__ == "__main__":
 				print(i)
 			ood_rate_dict[k_neighbour] = ood_detection_rate
 
-		with open('ood_rate-'+args.mode_flag+'-oodindex'+str(OOD_index)+'.pkl', 'wb') as handle:
+		with open(os.path.join(args.save_path,'ood_rate-'+args.model_flag+'-oodindex'+str(OOD_index)+'.pkl'), 'wb') as handle:
 			pickle.dump(ood_rate_dict, handle, protocol=pickle.HIGHEST_PROTOCOL)

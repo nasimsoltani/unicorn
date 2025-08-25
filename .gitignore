@@ -1,6 +1,5 @@
 results/
 *.pdf
 pkls/
-*.ipynb
 __init__.py
 __pycache__

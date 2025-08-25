@@ -1,4 +1,4 @@
-# ORAN
+# UNICORN 
 
 This is the code and dataset repository for UNICORN paper in ICMLCN 2025.
 

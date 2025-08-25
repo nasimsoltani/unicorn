@@ -207,3 +207,5 @@ def train_model(model, train_dl, val_dl, args, filename_suffix):
     save_loss_path = os.path.join(args.save_path,'loss-'+filename_suffix+'.pkl')
     with open (save_loss_path, 'wb') as handle:
         pickle.dump(save_dict,handle,protocol=pickle.HIGHEST_PROTOCOL)
+
+    return model
