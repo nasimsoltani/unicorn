@@ -99,39 +99,4 @@ class TrainORANTracesDataset(Dataset):
 
         return X, positive_sample, negative_sample, y
 
-"""class ValORANTracesDataset(TrainORANTracesDataset):
 
-    def __len__(self):
-        length = 0
-        for key in self.data_dict:
-            length += len(self.data_dict[key])*1000
-        return length
-
-    def __getitem__(self, idx):
-        #Generate two samples of data (anchor and positive)
-        this_random_class = random.sample(list(self.data_dict.keys()), 1)[0]
-        anchor_and_positive = random.sample(self.data_dict[this_random_class], 2)
-        X = anchor_and_positive[0]
-        random_index = random.randrange(X.shape[0]-self.slice_len)
-        X = X[random_index:random_index+self.slice_len,:]
-        X = X.unsqueeze(0)
-        
-		positive_sample = anchor_and_positive[1]
-        # take a random slice from the loaded trace:
-        random_index = random.randrange(positive_sample.shape[0]-self.slice_len)
-        positive_sample = positive_sample[random_index:random_index+self.slice_len,:]
-        positive_sample = positive_sample.unsqueeze(0)
-        y = this_random_class
-
-        ## load the negative sample
-        negative_class_list = list(self.data_dict.keys())
-        negative_class_list.remove(this_random_class)
-        negative_class = random.sample(negative_class_list, 1)[0]
-        negative_sample = random.sample(self.data_dict[negative_class], 1)[0]
-        # take a random slice from the loaded trace:
-        random_index = random.randrange(negative_sample.shape[0]-self.slice_len)
-        negative_sample = negative_sample[random_index:random_index+self.slice_len,:]
-        negative_sample = negative_sample.unsqueeze(0)
-        #negative_grid = np.moveaxis(negative_grid, -1, 0)
-
-        return X, positive_sample, negative_sample, y"""

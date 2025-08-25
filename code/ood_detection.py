@@ -61,11 +61,9 @@ def knn_ood_detector(all_classes, ID_classes, pred_dict_id, test_feature_dict, t
 	all_classes_array = np.empty(shape=[0, feature_dimension])
 	stride_list = []
 
-	ood_subtraces_for_next_round = {}
 	ood_detection_rate = []
 	print('running ood detection')
 	for class_index,traffic in enumerate(all_classes):
-		ood_subtraces_for_next_round[class_index] = []    # for retraining
 		X_test = np.array(test_feature_dict[class_index])
 		test_subtrace_list = test_subtrace_dict[class_index]
 		#print(traffic)
@@ -90,30 +88,21 @@ def knn_ood_detector(all_classes, ID_classes, pred_dict_id, test_feature_dict, t
 				
 				this_neighbour = X_train[neighbour_index]
 				this_neighbour_class = int(y_train[neighbour_index])
-				# print(neighbour_distance)
 				this_neighbour_distance_from_cluster_center = distance_function(this_neighbour , center_list[this_neighbour_class])
 				this_X_distance_from_cluster_center = distance_function(X , center_list[this_neighbour_class])
 				this_cluster_max_distance = max_distance_list[this_neighbour_class]
-				# print(this_cluster_max_distance)
-				# print(this_X_distance_from_cluster_center, this_neighbour_distance_from_cluster_center)
 				if this_X_distance_from_cluster_center <= this_neighbour_distance_from_cluster_center and this_X_distance_from_cluster_center <= this_cluster_max_distance:
 					ood_decision.append('ID')
 					class_list_for_this_X.append(this_neighbour_class)
 				else:
 					ood_decision.append('OOD')
                     
-			# print(ood_decision)
-			# print(class_list_for_this_X)
-			# if ood_decision.count('OOD') > ood_decision.count('ID'):
-			# if ood_decision:
 			if 'ID' not in ood_decision:
 				ood_counter += 1
-				# also collect traces detected as OOD to be sent out of this round
-				ood_subtraces_for_next_round[class_index].append(subtrace)
     
 		# now we have ood_counter for all the samples in the test class, get accuracy
 		ood_detection_rate.append(ood_counter/X_test.shape[0])
-	return ood_detection_rate, ood_subtraces_for_next_round
+	return ood_detection_rate
 
 def in_distribution_clusters(ds_file, norm_param_path, model, all_classes, ID_classes, slice_len):
     

@@ -157,7 +157,7 @@ if __name__ == "__main__":
 		ood_rate_dict = {}   
 
 		for k_neighbour in [5,10,15]:
-			ood_detection_rate, ood_subtrace_dict = knn_ood_detector(all_classes, ID_classes, pred_dict_id, test_feature_dict, test_subtrace_dict, feature_dimension, k_neighbour)
+			ood_detection_rate = knn_ood_detector(all_classes, ID_classes, pred_dict_id, test_feature_dict, test_subtrace_dict, feature_dimension, k_neighbour)
 			print('--------------------------------------')
 			print('k = ' +str(k_neighbour))
 			for i in ood_detection_rate:
