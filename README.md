@@ -6,10 +6,18 @@ This is the code and dataset repository for UNICORN paper in ICMLCN 2025.
 The traces that are used for training/test the models are included in the `trace` folder in the git repository.
 Full dataset before and after Colosseum can be found [here](https://utexas.box.com/s/rvtfrv09gnaf1xqaj0a1bfcdvsj0p3n1).
 
+## Repository Structure
+The repository has the following overall structure:
+
+* `code` directory: Contains the python code to do preprocessing, training, and test pipelines.
+* `traces` directory: Contains all the KPI traces used in the paper UNICORN.
+* `file2app_map.pkl`: Contains the mapping between the file names in `traces` and the application classes.
+* `Plotting.ipynb`: Contains scripts to read prediction pickle files and plot the results.
+
 ## Running the code
 
 ### Preprocessing
-As the first step you need to preprocess the dataset using `preprocessing.py`. Run it as:
+As the first step you need to preprocess the dataset using `preprocessing.py` in the `code` directory. Run it as:
 '''
 python preprocessing.py 
 '''
@@ -18,7 +26,7 @@ The above script reads the KPI traces stored in the `.csv` files in the `trace` 
 ### Training and Test pipeline
 Training and test pipeline can be run only after **Preprocessing** step is done.
 
-The pipeline can be run through `run_pipeline.sh` with the following content.
+The pipeline can be run through `run_pipeline.sh` in the `code` directory with the following content.
 
 ```
 python top.py \
@@ -48,3 +56,7 @@ Where `1` is the GPU ID.
 The test pipeline saves model predictions in `.pkl` files in the `results` directory.
 
 ### Plotting the results
+You can plot the confusion matrices, bar graphs, line graphs, and scatter plots in the paper using `Plotting.ipynb` script.
+
+## Running Test using the Pretrained Models and Plotting
+My `results` directory for the paper UNICORN is located [here](https://utexas.box.com/s/8ghzg17vh4p0ccwrqxgikhra8hapaasl), which can be downloaded and placed in the root folder next to `code` directory.
