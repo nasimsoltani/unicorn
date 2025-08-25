@@ -1,0 +1,8 @@
+results/
+*.pdf
+pkls/
+*.ipynb
+OODTRACTOR-Trial8-apps.*
+rehearsal_buffer.py
+__init__.py
+__pycache__
