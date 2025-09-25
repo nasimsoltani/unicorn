@@ -7,7 +7,7 @@ from tqdm import tqdm
 def chop_trace_to_subtrace(trace, sub_trace_len):
     sub_trace_list = []
     start_index = 0 
-    while start_index < trace.shape[0]-sub_trace_len:
+    while start_index <= trace.shape[0]-sub_trace_len:
         sub_trace_list.append(trace[start_index:start_index+sub_trace_len,:])
         start_index += sub_trace_len
     return sub_trace_list
